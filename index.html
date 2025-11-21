@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MusicBrainz Explorer</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="header-content">
+            <h1 class="app-title">MusicBrainz</h1>
+            <div class="header-actions">
+                <div class="queue-status" id="queue-status">Queue: 0 requests</div>
+                <button class="btn-icon" id="settings-btn" aria-label="Settings">⚙️</button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Container -->
+    <div class="container">
+        <!-- Search Section -->
+        <section class="search-section">
+            <div class="search-controls">
+                <select id="search-type" class="search-type-select" aria-label="Search type">
+                    <option value="artist">Artist</option>
+                    <option value="release">Release</option>
+                    <option value="recording">Recording</option>
+                    <option value="label">Label</option>
+                    <option value="release-group">Release Group</option>
+                    <option value="work">Work</option>
+                    <option value="area">Area</option>
+                    <option value="place">Place</option>
+                    <option value="instrument">Instrument</option>
+                    <option value="isrc">ISRC Lookup</option>
+                    <option value="genre">Browse Genres</option>
+                </select>
+                <input type="text" id="search-input" class="search-input" placeholder="Search MusicBrainz..." aria-label="Search query">
+                <button id="search-btn" class="btn-primary">Search</button>
+            </div>
+            
+            <!-- Advanced Filters -->
+            <div class="advanced-filters" id="advanced-filters">
+                <button class="filter-toggle" id="filter-toggle">Advanced Filters ▼</button>
+                <div class="filter-content" id="filter-content" style="display: none;">
+                    <div class="filter-group">
+                        <label for="year-filter">Year:</label>
+                        <input type="number" id="year-filter" placeholder="e.g., 1969">
+                    </div>
+                    <div class="filter-group">
+                        <label for="country-filter">Country (ISO):</label>
+                        <input type="text" id="country-filter" placeholder="e.g., GB, US">
+                    </div>
+                    <div class="filter-group">
+                        <label for="type-filter">Type:</label>
+                        <select id="type-filter">
+                            <option value="">All</option>
+                            <option value="album">Album</option>
+                            <option value="single">Single</option>
+                            <option value="ep">EP</option>
+                            <option value="compilation">Compilation</option>
+                            <option value="live">Live</option>
+                            <option value="soundtrack">Soundtrack</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Main Layout -->
+        <div class="main-layout">
+            <!-- Sidebar -->
+            <aside class="sidebar" id="sidebar">
+                <div class="sidebar-header">
+                    <h3>Recent Searches</h3>
+                    <button class="btn-text" id="clear-cache-btn">Clear Cache</button>
+                </div>
+                <ul class="recent-searches" id="recent-searches"></ul>
+                <div class="cache-stats" id="cache-stats">
+                    <p>Cache: <span id="cache-count">0</span> items</p>
+                </div>
+            </aside>
+
+            <!-- Results Panel -->
+            <main class="results-panel" id="results-panel">
+                <div class="results-header">
+                    <h2 id="results-count">Search for music</h2>
+                </div>
+                <div class="results-list" id="results-list">
+                    <div class="empty-state">
+                        <p>Enter a search query to explore the MusicBrainz database</p>
+                    </div>
+                </div>
+                <div class="pagination" id="pagination" style="display: none;">
+                    <button class="btn-secondary" id="prev-page" disabled>Previous</button>
+                    <span class="page-info" id="page-info">Page 1 of 1</span>
+                    <button class="btn-secondary" id="next-page" disabled>Next</button>
+                </div>
+            </main>
+
+            <!-- Detail Panel -->
+            <aside class="detail-panel" id="detail-panel">
+                <div class="detail-content">
+                    <div class="empty-state">
+                        <p>Select an item to view details</p>
+                    </div>
+                </div>
+            </aside>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <p>Powered by <a href="https://musicbrainz.org" target="_blank" rel="noopener">MusicBrainz</a></p>
+        <p><a href="https://musicbrainz.org/doc/Development/XML_Web_Service/Version_2" target="_blank" rel="noopener">API Documentation</a></p>
+        <p class="rate-limit-notice">Limited to 1 request/second</p>
+    </footer>
+
+    <!-- Settings Modal -->
+    <div class="modal" id="settings-modal" style="display: none;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Settings</h2>
+                <button class="btn-close" id="close-settings">×</button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label for="user-agent-input">User-Agent:</label>
+                    <input type="text" id="user-agent-input" class="form-control" placeholder="AppName/Version ( contact@example.com )">
+                    <small>Format: AppName/Version ( contact )</small>
+                </div>
+                <div class="form-group">
+                    <label>
+                        <input type="checkbox" id="enable-cache"> Enable caching
+                    </label>
+                </div>
+                <div class="form-group">
+                    <label for="results-per-page">Results per page:</label>
+                    <select id="results-per-page" class="form-control">
+                        <option value="25">25</option>
+                        <option value="50">50</option>
+                        <option value="100">100</option>
+                    </select>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn-secondary" id="cancel-settings">Cancel</button>
+                <button class="btn-primary" id="save-settings">Save</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Loading Overlay -->
+    <div class="loading-overlay" id="loading-overlay" style="display: none;">
+        <div class="spinner"></div>
+        <p class="loading-message" id="loading-message">Loading...</p>
+    </div>
+
+    <!-- Toast Container -->
+    <div class="toast-container" id="toast-container"></div>
+
+    <script src="utils.js"></script>
+    <script src="api-client.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>
