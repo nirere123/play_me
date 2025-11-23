@@ -812,4 +812,120 @@ a:focus, button:focus, input:focus, select:focus {
     clip: rect(0,0,0,0);
     white-space: nowrap;
     border-width: 0;
+}/* =============
+   FORCE RESPONSIVE FALLBACKS
+   Put this at the BOTTOM of styles.css
+   ============= */
+
+/* Extra specific selectors + !important fallback to override unexpected overrides */
+
+/* Small phones (<=480px) */
+@media (max-width: 480px) {
+    header.header .header-content,
+    .header .header-content {
+        flex-direction: column !important;
+        align-items: flex-start !important;
+        gap: 10px !important;
+    }
+
+    .app-title {
+        font-size: 22px !important;
+    }
+
+    .search-section .search-controls,
+    .search-controls {
+        display: flex !important;
+        flex-direction: column !important;
+        width: 100% !important;
+        gap: 10px !important;
+    }
+
+    .search-type-select,
+    .search-input,
+    .btn-primary {
+        width: 100% !important;
+        min-width: 0 !important;
+    }
+
+    /* Force one-column stack for main layout */
+    .container .main-layout,
+    .main-layout {
+        display: flex !important;
+        flex-direction: column !important;
+        gap: 20px !important;
+        grid-template-columns: none !important;
+    }
+
+    .sidebar,
+    .results-panel,
+    .detail-panel {
+        width: 100% !important;
+        max-width: 100% !important;
+        order: initial !important; /* allow DOM order to flow naturally */
+    }
+
+    .detail-info-row {
+        grid-template-columns: 1fr !important;
+    }
+
+    .cover-art {
+        max-width: 180px !important;
+        margin-left: auto !important;
+        margin-right: auto !important;
+    }
+
+    .modal-content {
+        width: 95% !important;
+        margin: 8% auto !important;
+    }
+}
+
+/* Medium phones / small tablets (<=768px) */
+@media (max-width: 768px) {
+    header.header .header-content,
+    .header .header-content {
+        gap: 12px !important;
+    }
+
+    .search-section {
+        padding: 15px !important;
+    }
+
+    .container .main-layout,
+    .main-layout {
+        display: grid !important;
+        grid-template-columns: 1fr !important;
+        gap: 16px !important;
+    }
+
+    .result-card {
+        padding: 15px !important;
+    }
+
+    .detail-panel {
+        position: static !important;
+        max-height: none !important;
+        border-radius: 8px !important;
+    }
+}
+
+/* Tablets & small desktops (<=1024px) */
+@media (max-width: 1024px) {
+    .container .main-layout,
+    .main-layout {
+        grid-template-columns: 1fr 1fr !important;
+        gap: 18px !important;
+    }
+
+    /* ensure sidebar visibility at medium widths if you prefer */
+    .sidebar {
+        display: block !important;
+    }
+}
+
+/* Safety: fallback for any small viewport */
+@media (max-width: 1200px) {
+    .search-controls > * {
+        min-width: 0 !important;
+    }
 }

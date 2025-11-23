@@ -173,3 +173,28 @@ This is a demonstration project. Feel free to fork and modify for your own use.
 
 - MusicBrainz for providing the comprehensive music database API
 - Cover Art Archive for album artwork
+
+Deployment on Web Servers (Web-01, Web-02 & Load Balancer)
+
+This project has been successfully deployed across multiple servers.
+The application is now accessible directly through each server’s public IP address.
+
+Successful Server Integration
+
+I have connected my Web Server 1, Web Server 2, and Load Balancer to the website. This means:
+
+When I enter
+http://44.203.172.203
+
+(Web Server 1 – 6898-web-01), the website opens immediately.
+
+When I enter
+http://35.175.233.122
+
+(Web Server 2 – 6898-web-02), the website also loads successfully.
+
+When I enter
+http://13.222.149.88
+
+(Load Balancer – 6898-lb-01), the load balancer distributes traffic and the website opens normally.
+All servers are correctly configured and successfully serving the same website
