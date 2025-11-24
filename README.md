@@ -54,34 +54,7 @@ This application strictly follows MusicBrainz API rules:
 - Client-side caching
 - Responsive design (mobile, tablet, desktop)
 
-## API Endpoints Used
 
-### Search
-- `/artist?query=...&fmt=json`
-- `/release?query=...&fmt=json`
-- `/recording?query=...&fmt=json`
-- `/label?query=...&fmt=json`
-- `/release-group?query=...&fmt=json`
-- `/work?query=...&fmt=json`
-- `/area?query=...&fmt=json`
-- `/place?query=...&fmt=json`
-- `/instrument?query=...&fmt=json`
-
-### Lookup
-- `/{entity}/{mbid}?inc=...&fmt=json`
-
-### Browse
-- `/release?artist={mbid}&limit=25&offset=0&fmt=json`
-- `/recording?release={mbid}&limit=100&offset=0&fmt=json`
-- `/release?label={mbid}&limit=25&offset=0&fmt=json`
-- `/release-group?artist={mbid}&limit=25&offset=0&fmt=json`
-- `/work?artist={mbid}&limit=25&offset=0&fmt=json`
-
-### Special
-- `/genre/all?limit=100&offset=0&fmt=json`
-- `/recording?query=isrc:{code}&fmt=json`
-- `/release?query=discid:{id}&fmt=json`
-- `/work?query=iswc:{code}&fmt=json`
 
 ## Rate Limiting
 
